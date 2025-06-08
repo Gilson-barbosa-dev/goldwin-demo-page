@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ativação da Conta Demo - GOLDWIN</title>
   <style>
     :root {
@@ -108,25 +108,25 @@
 </head>
 <body>
 
-  <img src="/logo.png" alt="Logo GOLDWIN">
+  <img src="/logo.png" alt="Logo GOLDWIN" />
   <h2>Ative sua conta demo do robô GOLDWIN</h2>
 
   <form id="form">
     <label>
       Nome:
-      <input type="text" id="name" required>
+      <input type="text" id="name" required />
     </label>
     <label>
       Email:
-      <input type="email" id="email" required>
+      <input type="email" id="email" required />
     </label>
     <label>
       WhatsApp:
-      <input type="tel" id="whatsapp" required>
+      <input type="tel" id="whatsapp" required />
     </label>
     <label>
       ID da Conta MetaTrader:
-      <input type="text" id="account_id" required>
+      <input type="text" id="account_id" required />
     </label>
     <button type="submit">Ativar Conta Demo</button>
   </form>
@@ -169,25 +169,16 @@
           });
           resposta.style.color = "#00ff7f";
           resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}`;
-        }else {
-          let mensagemFinal = "";
-        
-          try {
-            const erroJson = JSON.parse(resText);
-            mensagemFinal = erroJson.detail || erroJson.message || "";
-          } catch {
-            // 🔥 Remover "Erro interno: 403:" ou "500:"
-            mensagemFinal = resText
-              .replace(/Erro interno:\s*\d{3}:\s*/i, "") // remove prefixo completo
-              .replace(/^\d{3}:\s*/g, "")               // remove código isolado
-              .replace(/<[^>]*>/g, "")                  // remove HTML
-              .trim();
-          }
-        
+        } else {
+          const mensagemFinal = resText
+            .replace(/Erro interno:\s*\d{3}:\s*/i, "") // remove "Erro interno: 403:"
+            .replace(/^\d{3}:\s*/g, "")                // remove "403: "
+            .replace(/<[^>]*>/g, "")                   // remove HTML
+            .trim();
+
           resposta.style.color = "#ff4d4d";
           resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
         }
-
       } catch (e) {
         resposta.style.color = "#ff4d4d";
         resposta.innerText = "❌ Erro inesperado.";
