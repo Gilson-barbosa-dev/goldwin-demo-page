@@ -179,7 +179,7 @@
             mensagemFinal = resText
               .replace(/<[^>]*>/g, "") // remove HTML
               .replace(/Erro interno:\s*\d{3}:\s*/gi, "") // remove "Erro interno: 403:"
-              .replace(/^\d{3}:\s*/g, "") // remove "403: "
+              .replace(/^\d{3}:\s*/g, "") // remove "403: " isolado
               .trim();
           }
 
