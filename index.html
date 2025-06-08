@@ -156,9 +156,9 @@
       });
 
       const resText = await response.text();
-      let mensagemFinal = "";
 
       if (response.ok) {
+        // ✅ somente agora pode fazer parse
         const resJson = JSON.parse(resText);
         const dataObj = new Date(resJson.expira_em);
         const dataFormatada = dataObj.toLocaleString("pt-BR", {
@@ -171,26 +171,33 @@
         resposta.style.color = "#00ff7f";
         resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}`;
       } else {
+        // ⚠️ NÃO faz parse direto se response.ok for false
+        let mensagemFinal = "";
+
         try {
-          const erroJson = JSON.parse(resText);
-          mensagemFinal = erroJson.detail || erroJson.message || resText;
+          const json = JSON.parse(resText);
+          mensagemFinal = json.detail || json.message || "";
         } catch {
-          mensagemFinal = resText
-            .replace(/Erro interno:\s*\d{3}:\s*/gi, "")
-            .replace(/^\d{3}:\s*/g, "")
-            .replace(/<[^>]*>/g, "")
-            .trim();
+          mensagemFinal = resText;
         }
+
+        mensagemFinal = mensagemFinal
+          .replace(/Erro interno:\s*\d{3}:\s*/gi, "")
+          .replace(/^\d{3}:\s*/g, "")
+          .replace(/<[^>]*>/g, "")
+          .trim();
 
         resposta.style.color = "#ff4d4d";
         resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
       }
+
     } catch (e) {
       resposta.style.color = "#ff4d4d";
       resposta.innerText = "❌ Erro inesperado.";
     }
   });
 </script>
+
 
 
 
