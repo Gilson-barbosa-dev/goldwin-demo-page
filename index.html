@@ -174,20 +174,17 @@
           resposta.style.color = "#ff4d4d";
           resposta.innerText = resJson.detail || "❌ Erro ao criar conta demo.";
         }
-      } catch (e) {
-        resposta.style.color = "#ff4d4d";
-
-        const erroBruto = resText.trim();
-        let mensagemFinal = erroBruto;
-
-        // Regex que remove tudo antes da última parte da mensagem
-        const match = erroBruto.match(/[^:]+:\s*(\d{3}):\s*(.+)/);
-        if (match && match[2]) {
-          mensagemFinal = match[2];
+        } catch (e) {
+          resposta.style.color = "#ff4d4d";
+  
+          const erroBruto = resText.trim();
+  
+          // Remove códigos como "Erro interno: 403:" ou "500:"
+          const mensagemLimpa = erroBruto.replace(/(Erro interno:\s*)?\d{3}:\s*/g, "").trim();
+  
+          resposta.innerText = "❌ " + (mensagemLimpa || "Erro inesperado.");
         }
 
-        resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
-      }
 
     });
   </script>
