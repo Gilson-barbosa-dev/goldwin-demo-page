@@ -177,17 +177,18 @@
       } catch (e) {
         resposta.style.color = "#ff4d4d";
 
-        // ⚠️ Limpeza de prefixos como "Erro interno: 403: ..."
         const erroBruto = resText.trim();
         let mensagemFinal = erroBruto;
 
-        if (erroBruto.toLowerCase().startsWith("erro interno:")) {
-          const partes = erroBruto.split(": ");
-          mensagemFinal = partes.slice(2).join(": ");
+        // Regex que remove tudo antes da última parte da mensagem
+        const match = erroBruto.match(/[^:]+:\s*(\d{3}):\s*(.+)/);
+        if (match && match[2]) {
+          mensagemFinal = match[2];
         }
 
         resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
       }
+
     });
   </script>
 
