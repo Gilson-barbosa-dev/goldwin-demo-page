@@ -169,23 +169,25 @@
           });
           resposta.style.color = "#00ff7f";
           resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}`;
-        } else {
+        }else {
           let mensagemFinal = "";
-
+        
           try {
             const erroJson = JSON.parse(resText);
             mensagemFinal = erroJson.detail || erroJson.message || "";
           } catch {
+            // 🔥 Remover "Erro interno: 403:" ou "500:"
             mensagemFinal = resText
-              .replace(/<[^>]*>/g, "") // remove HTML
-              .replace(/Erro interno:\s*\d{3}:\s*/gi, "") // remove "Erro interno: 403:"
-              .replace(/^\d{3}:\s*/g, "") // remove "403: " isolado
+              .replace(/Erro interno:\s*\d{3}:\s*/i, "") // remove prefixo completo
+              .replace(/^\d{3}:\s*/g, "")               // remove código isolado
+              .replace(/<[^>]*>/g, "")                  // remove HTML
               .trim();
           }
-
+        
           resposta.style.color = "#ff4d4d";
           resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
         }
+
       } catch (e) {
         resposta.style.color = "#ff4d4d";
         resposta.innerText = "❌ Erro inesperado.";
