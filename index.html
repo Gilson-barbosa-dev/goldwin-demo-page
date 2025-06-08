@@ -39,7 +39,12 @@
       });
 
       const res = await response.json();
-      resposta.innerText = res.message || res.detail || "Erro desconhecido.";
+      if (response.ok) {
+      resposta.innerText = `✅ Conta demo criada! Expira em: ${res.expira_em}`;
+      } else {
+        resposta.innerText = res.detail || "❌ Erro ao criar conta demo.";
+      }
+
     });
   </script>
 </body>
