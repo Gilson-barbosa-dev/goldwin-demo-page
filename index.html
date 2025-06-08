@@ -176,7 +176,12 @@
         }
       } catch (e) {
         resposta.style.color = "#ff4d4d";
-        resposta.innerText = "❌ Erro inesperado: " + resText;
+        try {
+          const mensagemLimpa = resText.split(": ").slice(1).join(": ").trim();
+          resposta.innerText = "❌ " + mensagemLimpa;
+        } catch {
+          resposta.innerText = "❌ Erro inesperado.";
+        }
       }
     });
   </script>
