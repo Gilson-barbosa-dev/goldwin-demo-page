@@ -176,12 +176,17 @@
         }
       } catch (e) {
         resposta.style.color = "#ff4d4d";
-        try {
-          const mensagemLimpa = resText.split(": ").slice(1).join(": ").trim();
-          resposta.innerText = "❌ " + mensagemLimpa;
-        } catch {
-          resposta.innerText = "❌ Erro inesperado.";
+
+        // ⚠️ Limpeza de prefixos como "Erro interno: 403: ..."
+        const erroBruto = resText.trim();
+        let mensagemFinal = erroBruto;
+
+        if (erroBruto.toLowerCase().startsWith("erro interno:")) {
+          const partes = erroBruto.split(": ");
+          mensagemFinal = partes.slice(2).join(": ");
         }
+
+        resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
       }
     });
   </script>
