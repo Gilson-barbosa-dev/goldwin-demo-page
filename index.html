@@ -38,11 +38,18 @@
         body: JSON.stringify(data)
       });
 
-      const res = await response.json();
-      if (response.ok) {
-      resposta.innerText = `✅ Conta demo criada! Expira em: ${res.expira_em}`;
-      } else {
-        resposta.innerText = res.detail || "❌ Erro ao criar conta demo.";
+      let resText = "";
+      try {
+        resText = await response.text();
+        const resJson = JSON.parse(resText);
+      
+        if (response.ok) {
+          resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${resJson.expira_em}`;
+        } else {
+          resposta.innerText = resJson.detail || "❌ Erro ao criar conta demo.";
+        }
+      } catch (e) {
+        resposta.innerText = "❌ Erro inesperado: " + resText;
       }
 
     });
