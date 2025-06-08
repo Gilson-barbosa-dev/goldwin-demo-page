@@ -108,7 +108,7 @@
 </head>
 <body>
 
-  <img src="logo.png" alt="Logo GOLDWIN" />
+  <img src="./logo.png" alt="Logo GOLDWIN" />
   <h2>Ative sua conta demo do robô GOLDWIN</h2>
 
   <form id="form">
@@ -156,6 +156,7 @@
       });
 
       const resText = await response.text();
+      let mensagemFinal = "";
 
       if (response.ok) {
         const resJson = JSON.parse(resText);
@@ -170,23 +171,27 @@
         resposta.style.color = "#00ff7f";
         resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}`;
       } else {
-        // ⚠️ NÃO TENTE PARSEAR como JSON
-        let mensagemFinal = resText
-          .replace(/Erro interno:\s*\d{3}:\s*/gi, "")
-          .replace(/^\d{3}:\s*/g, "")
-          .replace(/<[^>]*>/g, "") // remove HTML se vier
-          .trim();
+        try {
+          const erroJson = JSON.parse(resText);
+          mensagemFinal = erroJson.detail || erroJson.message || resText;
+        } catch {
+          mensagemFinal = resText
+            .replace(/Erro interno:\s*\d{3}:\s*/gi, "")
+            .replace(/^\d{3}:\s*/g, "")
+            .replace(/<[^>]*>/g, "")
+            .trim();
+        }
 
         resposta.style.color = "#ff4d4d";
         resposta.innerText = "❌ " + (mensagemFinal || "Erro inesperado.");
       }
-
     } catch (e) {
       resposta.style.color = "#ff4d4d";
       resposta.innerText = "❌ Erro inesperado.";
     }
   });
 </script>
+
 
 
 </body>
