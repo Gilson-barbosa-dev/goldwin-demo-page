@@ -2,62 +2,82 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ativação da Conta Demo - GOLDWIN</title>
   <style>
+    :root {
+      --gold: #FFD700;
+      --black: #0c0c0c;
+      --dark: #1c1c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background-color: #0c0c0c;
-      font-family: Arial, sans-serif;
-      color: #FFD700;
-      text-align: center;
-      padding: 40px 20px;
+      margin: 0;
+      padding: 0;
+      background-color: var(--black);
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
     }
 
     img {
-      max-width: 180px;
+      max-width: 160px;
       margin-bottom: 20px;
     }
 
     h2 {
-      font-size: 24px;
-      margin-bottom: 30px;
-      color: #FFD700;
+      font-size: 1.5rem;
+      margin-bottom: 25px;
+      text-align: center;
     }
 
     form {
-      display: inline-block;
-      background-color: #1c1c1c;
-      padding: 30px;
+      background-color: var(--dark);
+      padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     }
 
     label {
       display: block;
-      text-align: left;
-      margin-bottom: 10px;
-      color: #FFD700;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
     }
 
     input {
       width: 100%;
       padding: 10px;
-      margin-top: 4px;
-      margin-bottom: 15px;
-      border: 1px solid #FFD700;
+      margin-top: 5px;
+      border: 1px solid var(--gold);
       border-radius: 6px;
-      background-color: #0c0c0c;
-      color: #FFD700;
+      background-color: var(--black);
+      color: var(--gold);
+      font-size: 1rem;
     }
 
     button {
-      padding: 10px 25px;
-      background-color: #FFD700;
-      color: #0c0c0c;
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: var(--gold);
+      color: var(--black);
       border: none;
       border-radius: 6px;
-      cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s ease;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
@@ -66,33 +86,48 @@
 
     #resposta {
       margin-top: 20px;
-      font-size: 16px;
+      font-size: 0.95rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    @media (max-width: 480px) {
+      form {
+        padding: 20px;
+      }
+
+      input, button {
+        font-size: 0.95rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Coloque o caminho do seu logo abaixo -->
-  <img src="/logo.png" alt="Logo GOLDWIN">
 
+  <img src="logo.png" alt="Logo GOLDWIN">
   <h2>Ative sua conta demo do robô GOLDWIN</h2>
 
   <form id="form">
-    <label>Nome:
+    <label>
+      Nome:
       <input type="text" id="name" required>
     </label>
-
-    <label>Email:
+    <label>
+      Email:
       <input type="email" id="email" required>
     </label>
-
-    <label>WhatsApp:
+    <label>
+      WhatsApp:
       <input type="tel" id="whatsapp" required>
     </label>
-
-    <label>ID da Conta MetaTrader:
+    <label>
+      ID da Conta MetaTrader:
       <input type="text" id="account_id" required>
     </label>
-
     <button type="submit">Ativar Conta Demo</button>
   </form>
 
@@ -145,5 +180,6 @@
       }
     });
   </script>
+
 </body>
 </html>
