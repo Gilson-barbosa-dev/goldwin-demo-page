@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ativação da Conta Demo - GOLDWIN</title>
+</head>
+<body>
+  <h2>Ative sua conta demo do robô GOLDWIN</h2>
+
+  <form id="form">
+    <label>Nome: <input type="text" id="name" required></label><br>
+    <label>Email: <input type="email" id="email" required></label><br>
+    <label>WhatsApp: <input type="tel" id="whatsapp" required></label><br>
+    <label>ID da Conta MetaTrader: <input type="text" id="account_id" required></label><br>
+    <button type="submit">Ativar Conta Demo</button>
+  </form>
+
+  <p id="resposta"></p>
+
+  <script>
+    const form = document.getElementById('form');
+    const resposta = document.getElementById('resposta');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        account_id: document.getElementById('account_id').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        plan: "demo"
+      };
+
+      const response = await fetch("https://SEU_DOMINIO_API/licenca", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const res = await response.json();
+      resposta.innerText = res.message || res.detail || "Erro desconhecido.";
+    });
+  </script>
+</body>
+</html>
