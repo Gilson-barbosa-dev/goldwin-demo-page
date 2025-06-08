@@ -15,7 +15,7 @@
     <button type="submit">Ativar Conta Demo</button>
   </form>
 
-  <p id="resposta"></p>
+  <p id="resposta" style="font-weight: bold;"></p>
 
   <script>
     const form = document.getElementById('form');
@@ -42,16 +42,27 @@
       try {
         resText = await response.text();
         const resJson = JSON.parse(resText);
-      
+
         if (response.ok) {
-          resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${resJson.expira_em}`;
+          const dataISO = resJson.expira_em;
+          const dataObj = new Date(dataISO);
+          const dataFormatada = dataObj.toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+          });
+          resposta.style.color = "green";
+          resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}`;
         } else {
+          resposta.style.color = "red";
           resposta.innerText = resJson.detail || "❌ Erro ao criar conta demo.";
         }
       } catch (e) {
+        resposta.style.color = "red";
         resposta.innerText = "❌ Erro inesperado: " + resText;
       }
-
     });
   </script>
 </body>
