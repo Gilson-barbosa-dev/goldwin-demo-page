@@ -169,7 +169,13 @@
           minute: "2-digit"
         });
         resposta.style.color = "#00ff7f";
-        resposta.innerText = `✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}`;
+        resposta.innerHTML = `
+        ✅ Conta demo criada com sucesso! Expira em: ${dataFormatada}<br><br>
+        <a href="https://raw.githubusercontent.com/Gilson-barbosa-dev/goldwin-demo-page/main/GOLDWIN%201.0%20-%20DEMO.ex5" 
+           download 
+           style="color: #FFD700; font-weight: bold; text-decoration: underline;">
+          ⬇️ Clique aqui para baixar o robô GOLDWIN DEMO
+        </a>`;
       } else {
         // ⚠️ NÃO faz parse direto se response.ok for false
         let mensagemFinal = "";
